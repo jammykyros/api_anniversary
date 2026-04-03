@@ -37,4 +37,17 @@ router.post("/", async (req, res) => {
   }
 });
 
+// DELETE grievance by ID
+router.delete("/:id", async (req, res) => {
+  try {
+    const [result] = await db.query("DELETE FROM grievances WHERE id = ?", [req.params.id]);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Grievance not found" });
+    }
+    res.json({ message: "Grievance deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
