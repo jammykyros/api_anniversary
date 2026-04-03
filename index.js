@@ -14,6 +14,9 @@ app.get('/', (req, res) => {
 // Memories routes
 app.use('/memories', require('./routes/memories'));
 
+// Grievances routes
+app.use('/grievances', require('./routes/grievances'));
+
 // Start server
 const PORT = process.env.PORT || 3333;
 app.listen(PORT, () => {
