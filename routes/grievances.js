@@ -51,3 +51,22 @@ router.delete("/:id", async (req, res) => {
 });
 
 module.exports = router;
+
+// PUT grievance by ID (update)
+router.put("/:id", async (req, res) => {
+  const { title, detail, mood, severity } = req.body;
+  try {
+    const [result] = await db.query(
+      "UPDATE grievances SET title = ?, detail = ?, mood = ?, severity = ? WHERE id = ?",
+      [title, detail, mood, severity, req.params.id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Grievance not found" });
+    }
+
+    res.json({ message: "Grievance updated" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
